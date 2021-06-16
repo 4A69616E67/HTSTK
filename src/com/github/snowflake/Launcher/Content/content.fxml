@@ -3,15 +3,24 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane prefHeight="400.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.github.snowflake.Launcher.Content.Content">
+<?import com.github.snowflake.Controls.*?>
+<AnchorPane prefHeight="400.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.snowflake.Launcher.Content.Content">
    <padding>
-      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
    </padding>
    <children>
-      <FlowPane fx:id="ChIP_Seq_FlowPane" prefHeight="100.0" rowValignment="TOP" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0"/>
-      <TextArea fx:id="ChIP_Seq_TextArea" editable="false" layoutX="6.0" layoutY="114.0" prefHeight="268.0" prefWidth="569.0" text="Test content" AnchorPane.bottomAnchor="2.0"
-                AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="112.0"/>
+      <VBox fx:id="Content_VBox" layoutX="6.0" layoutY="6.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="4.0">
+         <children>
+            <FlowPane fx:id="Content_FlowPane" columnHalignment="CENTER" hgap="20.0" prefHeight="87.0" prefWidth="582.0" rowValignment="TOP" vgap="10.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </FlowPane>
+            <TextArea fx:id="Content_TextArea" editable="false" prefHeight="291.0" prefWidth="582.0" text="Test content" wrapText="true" GridPane.rowIndex="1" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>
