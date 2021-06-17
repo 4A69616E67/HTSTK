@@ -41,7 +41,7 @@
                 <font>
                    <Font size="18.0" />
                 </font></Button>
-            <Button fx:id="Other_Tools_Button" wrapText="true" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#Show_RNA_Content" text="Other Tools" textAlignment="CENTER">
+            <Button fx:id="Other_Tools_Button" wrapText="true" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="68.0" mnemonicParsing="false" onMouseClicked="#Show_Other_Content" text="Other Tools" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>

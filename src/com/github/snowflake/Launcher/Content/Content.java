@@ -11,7 +11,7 @@ public class Content {
     public TextArea Content_TextArea;
     public VBox Content_VBox;
 
-    public void InitChIPSeqContent()throws Exception{
+    public void InitChIPSeqContent(){
         Content_FlowPane.getChildren().clear();
         Content_TextArea.setText("ChIP-Seq test Area");
         ImageLabelButton Pipeline = new ImageLabelButton(Path.TextIcon,"ChIP-Seq pipeline");
@@ -27,5 +27,19 @@ public class Content {
 //        Content_TextArea.setPrefHeight(Content_VBox.getHeight()-Content_FlowPane.getHeight());
     }
 
-
+    public void InitOtherToolsContent(){
+        Content_FlowPane.getChildren().clear();
+        Content_TextArea.setText("Other tools test Area");
+        ImageLabelButton DataView = new ImageLabelButton(Path.TextIcon,"Data view");
+        DataView.setOnMouseClicked(event -> {
+            Stage ChIP_Seq_Pipeline_Stage = new Stage();
+            ChIP_Seq_Pipeline_Stage.setTitle("Data view");
+            ChIP_Seq_Pipeline_Stage.show();
+        });
+        ImageLabelButton Statistic = new ImageLabelButton(Path.TextIcon,"Statistic");
+        ImageLabelButton PeakCompare = new ImageLabelButton(Path.TextIcon,"PeakCompare");
+        Content_FlowPane.getChildren().addAll(DataView, Statistic, PeakCompare);
+//        Content_FlowPane.setPrefHeight(Pipeline.getHeight());
+//        Content_TextArea.setPrefHeight(Content_VBox.getHeight()-Content_FlowPane.getHeight());
+    }
 }
