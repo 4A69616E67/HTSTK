@@ -31,7 +31,7 @@
          <left>
             <ScrollPane fitToHeight="true" BorderPane.alignment="CENTER">
                <content>
-                  <TreeView fx:id="DataView_TreeView" prefWidth="150.0" />
+                  <TreeView fx:id="DataView_TreeView" prefWidth="150.0" onMouseClicked="#ShowSelectedItem" />
                </content>
             </ScrollPane>
          </left>
@@ -40,11 +40,14 @@
                <children>
                   <HBox spacing="5.0">
                      <children>
-                        <TextField prefHeight="23.0" prefWidth="382.0" />
-                        <Button mnemonicParsing="false" text="Button" HBox.hgrow="NEVER" />
+                        <TextField fx:id="DataView_TextField" prefHeight="23.0">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></TextField>
+                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Button" textAlignment="CENTER" HBox.hgrow="NEVER" />
                      </children>
                      <VBox.margin>
-                        <Insets left="2.0" right="2.0" />
+                        <Insets right="5.0" />
                      </VBox.margin>
                   </HBox>
                   <AnchorPane prefHeight="434.0" prefWidth="443.0">
