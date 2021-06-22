@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Pane root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 //        root.show();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("HTSTK");
         primaryStage.setScene(new Scene(root, 1500, 900));
         primaryStage.show();
     }
