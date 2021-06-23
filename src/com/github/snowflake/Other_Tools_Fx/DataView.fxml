@@ -46,25 +46,18 @@
                                     </HBox.margin>
                                 </TextField>
                                 <Button fx:id="FileSelectButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#ChoseFile" prefHeight="23.0" prefWidth="63.0" text="Select" textAlignment="CENTER" HBox.hgrow="NEVER" />
-                        <Button fx:id="Analyse_Button" mnemonicParsing="false" text="Analyse" onMouseClicked="#analyse"/>
+                        <Button fx:id="Analyse_Button" mnemonicParsing="false" onMouseClicked="#analyse" text="Analyse" />
                             </children>
                             <VBox.margin>
                                 <Insets right="5.0" top="2.0" />
                             </VBox.margin>
                         </HBox>
-                        <AnchorPane prefHeight="434.0" prefWidth="443.0">
-                            <VBox.margin>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </VBox.margin>
-                     <children>
-                        <SplitPane dividerPositions="0.6" layoutX="198.0" layoutY="119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <items>
-                            <AnchorPane fx:id="Data_Show_AnchorPane" prefHeight="432.0" prefWidth="509.0" />
-                            <AnchorPane fx:id="Figure_Show_AnchorPane" minHeight="0.0" minWidth="0.0" prefHeight="432.0" prefWidth="358.0" />
-                          </items>
-                        </SplitPane>
-                     </children>
-                        </AnchorPane>
+                  <SplitPane dividerPositions="0.6" prefHeight="516.0" prefWidth="664.0" VBox.vgrow="ALWAYS">
+                    <items>
+                      <AnchorPane fx:id="Data_Show_AnchorPane" minHeight="10.0" minWidth="10.0" />
+                      <AnchorPane fx:id="Figure_Show_AnchorPane" minHeight="10.0" minWidth="10.0" />
+                    </items>
+                  </SplitPane>
                     </children>
                 </VBox>
             </center>

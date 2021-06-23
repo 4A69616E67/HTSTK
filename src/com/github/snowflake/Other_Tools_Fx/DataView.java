@@ -2,16 +2,20 @@ package com.github.snowflake.Other_Tools_Fx;
 
 import com.github.SnowFlakes.File.FastaFile;
 import com.github.SnowFlakes.IO.FastaReaderExtension;
+import com.github.SnowFlakes.unit.StatUnit;
 import com.github.snowflake.Archive.Path;
 import com.github.snowflake.Controls.TreeFile;
 import htsjdk.samtools.reference.ReferenceSequence;
 import htsjdk.samtools.util.StringUtil;
 import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.geometry.Side;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
@@ -20,7 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.Format;
-import java.util.HashMap;
+import java.util.*;
 
 public class DataView {
 
@@ -88,40 +92,57 @@ public class DataView {
             Alert dialog = new Alert(Alert.AlertType.INFORMATION);
             dialog.setHeaderText("reading ......");
             dialog.show();
-            FastaReaderExtension fasta_reader = new FastaFile(select_file).getReader();
-            ReferenceSequence seq;
-            HashMap<String,ReferenceSequence> seq_list=new HashMap<>();
-            int CG_count=0,seq_len=0,AT_count=0;
-            while ((seq = fasta_reader.ReadRecord()) != null) {
-                seq_len+=seq.length();
-                byte[] char_seq = seq.getBases();
-                for(byte c: char_seq){
-                    switch (c){
-                        case 'c':
-                        case 'C':
-                        case 'g':
-                        case 'G':
-                            CG_count++;
-                            break;
-                        case 'A':
-                        case 'a':
-                        case 'T':
-                        case 't':
-                            AT_count++;
-                            break;
-                    }
-                }
-                seq_list.put(seq.getName(),seq);
-            }
+            long AT_count = 0, CG_count = 0, N_count = 0;
+            //---------------------------------stat---------------------------------
+            StatUnit fasta_stat = new StatUnit();
+            fasta_stat.analys(new FastaFile(select_file));
+            //----------------------------------------------------------------------
             dialog.close();
-            javafx.collections.ObservableList<PieChart.Data> data = javafx.collections.FXCollections.observableArrayList(new PieChart.Data("CG",CG_count),new PieChart.Data("AT",AT_count));
+            TextArea area = new TextArea();
+
+//            ObservableList<XYChart.Data>
+            StackedBarChart<String, Number> bc = new StackedBarChart<>(new CategoryAxis(), new NumberAxis());
+            bc.getYAxis().setLabel("Count");
+            bc.setTitle("CG Contact");
+            HashMap<String, int[]> fasta_map = fasta_stat.base_count_sum;
+            XYChart.Series series_A = new XYChart.Series();
+            XYChart.Series series_T = new XYChart.Series();
+            XYChart.Series series_C = new XYChart.Series();
+            XYChart.Series series_G = new XYChart.Series();
+            XYChart.Series series_N = new XYChart.Series();
+            series_A.setName("A");
+            series_T.setName("T");
+            series_C.setName("C");
+            series_G.setName("G");
+            series_N.setName("N");
+            List<String> keys = Arrays.asList(fasta_map.keySet().toArray(new String[0]));
+            Collections.sort(keys);
+            for (String s : keys) {
+                int[] count = fasta_map.get(s);
+                AT_count += count['a'] + count['A'] + count['t'] + count['T'];
+                CG_count += count['c'] + count['C'] + count['g'] + count['G'];
+                N_count += count['n'] + count['N'];
+                long sum = count['a'] + count['A'] + count['t'] + count['T'] + count['c'] + count['C'] + count['g'] + count['G'] + count['n'] + count['N'];
+                series_A.getData().add(new XYChart.Data<>(s, (float) (count['a'] + count['A']) / sum));
+                series_T.getData().add(new XYChart.Data<>(s, (float) (count['t'] + count['T']) / sum));
+                series_C.getData().add(new XYChart.Data<>(s, (float) (count['c'] + count['C']) / sum));
+                series_G.getData().add(new XYChart.Data<>(s, (float) (count['g'] + count['G']) / sum));
+                series_N.getData().add(new XYChart.Data<>(s, (float) (count['n'] + count['N']) / sum));
+                area.appendText(s + ":" + new DecimalFormat(",###").format(sum)+"\n");
+            }
+            bc.getData().addAll(series_A, series_T, series_C, series_G, series_N);
+            javafx.collections.ObservableList<PieChart.Data> data = javafx.collections.FXCollections.observableArrayList(new PieChart.Data("CG", CG_count), new PieChart.Data("AT", AT_count));
             PieChart chart = new PieChart(data);
             chart.setTitle("CG contact");
             chart.setLegendSide(Side.RIGHT);
-            Figure_Show_AnchorPane.getChildren().add(chart);
-            TextArea area = new TextArea();
-            area.appendText("sequence length: "+new DecimalFormat(",###").format(AT_count+CG_count)+"\n");
-            area.appendText("sequence length (include N): "+new DecimalFormat(",###").format(seq_len)+"\n");
+            GridPane pane = new GridPane();
+            pane.add(bc, 0, 0);
+            pane.add(chart, 1, 0);
+            Figure_Show_AnchorPane.getChildren().addAll(pane);
+
+            area.appendText("sequence length: " + new DecimalFormat(",###").format(AT_count + CG_count) + "\n");
+            area.appendText("sequence length (include N): " + new DecimalFormat(",###").format(AT_count + CG_count + N_count) + "\n");
+            area.setEditable(false);
             Data_Show_AnchorPane.getChildren().add(area);
         }
     }
